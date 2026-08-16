@@ -108,7 +108,7 @@ export const ProductDetail = () => {
           {currentImage ? (
             <img src={currentImage} alt={product.name} style={{ maxWidth: '100%', maxHeight: '380px', objectFit: 'contain' }} className="animate-float" />
           ) : (
-            <span style={{ fontSize: '8rem', opacity: 0.3 }}>📦</span>
+            <Package size={80} style={{ color: "var(--color-text-muted)", opacity: 0.4 }} />
           )}
         </div>
 
@@ -174,7 +174,7 @@ export const ProductDetail = () => {
               disabled={currentStock === 0}
               style={{ flex: '1 1 200px', borderRadius: 'var(--radius-lg)', background: addedMsg ? 'var(--color-success)' : '', transition: 'background 0.3s' }}
             >
-              {addedMsg ? '✓ Agregado al carrito' : <><ShoppingCart size={18} /> Agregar al carrito</>}
+              {addedMsg ? 'Agregado al carrito' : <><ShoppingCart size={18} /> Agregar al carrito</>}
             </button>
             <Link to="/checkout" className="btn btn-accent btn-lg" style={{ flex: '1 1 160px', borderRadius: 'var(--radius-lg)', textAlign: 'center' }}>
               Comprar ahora
@@ -195,7 +195,7 @@ export const ProductDetail = () => {
       {/* Price History Chart */}
       {chartData.length > 0 && (
         <section className="card" style={{ padding: '1.5rem' }}>
-          <h2 style={{ fontWeight: 700, marginBottom: '0.5rem', fontSize: '1.1rem' }}>📊 Historial de precios (vs. Competencia)</h2>
+          <h2 style={{ fontWeight: 700, marginBottom: '0.5rem', fontSize: '1.1rem' }}>Historial de precios (vs. Competencia)</h2>
           <p style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)', marginBottom: '1.5rem' }}>Los últimos 30 días comparados con Falabella y Ripley.</p>
           <ResponsiveContainer width="100%" height={280}>
             <LineChart data={chartData}>

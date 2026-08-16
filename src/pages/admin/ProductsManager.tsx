@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { api } from '../../services/api';
-import { Search, Plus, RefreshCw, Eye, EyeOff } from 'lucide-react';
-
+import { Search, Plus, RefreshCw, Eye, EyeOff, Package } from 'lucide-react';
 export const ProductsManager = () => {
   const [products, setProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -100,7 +99,7 @@ export const ProductsManager = () => {
                   <td>
                     {p.image_url ? (
                       <img src={p.image_url} alt={p.name} style={{ width: 48, height: 48, objectFit: 'contain', borderRadius: 'var(--radius-sm)', background: 'var(--color-bg-subtle)', padding: '4px' }} />
-                    ) : <span style={{ fontSize: '1.5rem' }}>📦</span>}
+                    ) : <Package size={20} style={{ color: "var(--color-text-muted)" }} />}
                   </td>
                   <td><code style={{ fontSize: '0.75rem', background: 'var(--color-bg-subtle)', padding: '0.2rem 0.4rem', borderRadius: '4px' }}>{p.sku}</code></td>
                   <td style={{ fontWeight: 500, maxWidth: '220px' }}>

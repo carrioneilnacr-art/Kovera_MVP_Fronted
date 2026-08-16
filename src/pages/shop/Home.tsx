@@ -8,6 +8,7 @@ import { Hero } from '../../components/home/Hero';
 import { CategoryIconGrid } from '../../components/home/CategoryIconGrid';
 import { ProductCard } from '../../components/home/ProductCard';
 import { BrandStrip } from '../../components/home/BrandStrip';
+import { PackageSearch } from 'lucide-react';
 
 export const Home = () => {
   const [searchParams] = useSearchParams();
@@ -17,17 +18,10 @@ export const Home = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [activeCategory, setActiveCategory] = useState<number | null>(null);
+  const [sortBy, setSortBy] = useState<'newest' | 'price_asc' | 'price_desc'>('newest');
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const addItem = useCartStore((s) => s.addItem);
-
-  const categoryIcons: Record<string, string> = {
-    'celulares': '📱', 'laptops': '💻', 'tablets': '🖥️',
-    'audio': '🎧', 'smartwatches': '⌚', 'camaras': '📷',
-    'accesorios': '🎒', 'gaming': '🎮', 'televisores': '📺',
-    'impresoras': '🖨️', 'auriculares-iphone': '🎵',
-    'samsung-galaxy': '📲', 'laptops-apple': '🍎', 'laptops-gaming': '🕹️',
-  };
 
   const fetchProducts = async (catId?: number | null, p = 1) => {
     setLoading(true);
@@ -35,6 +29,7 @@ export const Home = () => {
       const params: Record<string, string | number> = { page: p, limit: 20 };
       if (catId) params.categoryId = catId;
       if (searchQ) params.search = searchQ;
+      if (sortBy) params.sortBy = sortBy;
       const [productsRes, categoriesRes] = await Promise.all([
         api.get('/catalog/products', { params }),
         categories.length ? Promise.resolve({ data: categories }) : api.get('/catalog/categories'),
@@ -50,7 +45,7 @@ export const Home = () => {
     }
   };
 
-  useEffect(() => { fetchProducts(activeCategory, 1); setPage(1); }, [activeCategory, searchQ]);
+  useEffect(() => { fetchProducts(activeCategory, 1); setPage(1); }, [activeCategory, searchQ, sortBy]);
   useEffect(() => { if (page > 1) fetchProducts(activeCategory, page); }, [page]);
 
   const handleAddToCart = (product: Product) => {
@@ -62,42 +57,53 @@ export const Home = () => {
       imageUrl: product.image_url ?? '',
       sku: product.sku,
     });
-    // In a real app we would use a toast notification here
   };
 
-  const skeletonArr = Array.from({ length: 12 });
+  const skeletonArr = Array.from({ length: 10 });
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}>
-      
-      {/* ── Hero ── */}
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+      {/* Hero */}
       <Hero />
 
-      {/* ── Banner de Campaña ── */}
+      {/* Campaign Banner */}
       <CampaignBanner />
 
-      {/* ── Tira de Marcas ── */}
+      {/* Brand Strip */}
       <BrandStrip />
 
-      {/* ── Grid de Categorías ── */}
+      {/* Categories Grid */}
       <CategoryIconGrid 
         categories={categories}
         activeCategory={activeCategory}
         onSelect={setActiveCategory}
-        categoryIcons={categoryIcons}
       />
 
-      {/* ── Productos ── */}
+      {/* Catalog Section */}
       <section id="catalogo">
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '2rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '0.75rem' }}>
           <div>
-            <h2 className="section-title" style={{ marginBottom: '0.25rem' }}>
-              {activeCategory ? categories.find(c => c.id === activeCategory)?.name : 'Novedades'}
+            <h2 className="section-title" style={{ marginBottom: '0.25rem', fontSize: '1.35rem' }}>
+              {activeCategory ? categories.find(c => c.id === activeCategory)?.name : 'Catálogo de Productos'}
             </h2>
-            <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.9rem' }}>
+            <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.85rem', margin: 0 }}>
               {searchQ ? `Resultados para "${searchQ}"` : 'Lo último en tecnología para ti'}
             </p>
           </div>
+          <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <label htmlFor="sortBy" style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)', fontWeight: 500 }}>Ordenar por:</label>
+              <select 
+                id="sortBy" 
+                value={sortBy} 
+                onChange={(e) => setSortBy(e.target.value as any)}
+                style={{ padding: '0.4rem 0.75rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--color-border)', background: 'var(--color-bg-card)', fontSize: '0.85rem', color: 'var(--color-text-primary)', outline: 'none' }}
+              >
+                <option value="newest">Novedades</option>
+                <option value="price_desc">Mayor precio</option>
+                <option value="price_asc">Menor precio</option>
+              </select>
+            </div>
           {totalPages > 1 && (
             <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
               <button 
@@ -105,41 +111,42 @@ export const Home = () => {
                 disabled={page === 1}
                 onClick={() => setPage(p => p - 1)}
               >
-                ← Anterior
+                &larr; Anterior
               </button>
-              <span style={{ fontSize: '0.85rem', fontWeight: 600 }}>{page} / {totalPages}</span>
+              <span style={{ fontSize: '0.8rem', fontWeight: 600 }}>{page} / {totalPages}</span>
               <button 
                 className="btn btn-outline btn-sm"
                 disabled={page >= totalPages}
                 onClick={() => setPage(p => p + 1)}
               >
-                Siguiente →
+                Siguiente &rarr;
               </button>
             </div>
           )}
         </div>
+      </div>
 
         {error && (
-          <div className="alert" style={{ background: '#fef2f2', color: '#991b1b', border: '1px solid #fecaca', marginBottom: '2rem' }}>
+          <div className="alert" style={{ background: '#fef2f2', color: '#991b1b', border: '1px solid #fecaca', marginBottom: '1.5rem' }}>
             <strong>Error:</strong> {error}
           </div>
         )}
 
-        <div className="product-grid">
+        <div className="products-grid">
           {loading ? (
             skeletonArr.map((_, i) => (
-              <div key={i} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                <div className="skeleton" style={{ height: '280px', borderRadius: 'var(--radius-lg)' }} />
-                <div className="skeleton" style={{ height: '20px', width: '80%' }} />
-                <div className="skeleton" style={{ height: '24px', width: '40%' }} />
+              <div key={i} style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                <div className="skeleton" style={{ aspectRatio: '1', borderRadius: 'var(--radius-md)' }} />
+                <div className="skeleton" style={{ height: '16px', width: '80%' }} />
+                <div className="skeleton" style={{ height: '20px', width: '40%' }} />
               </div>
             ))
           ) : products.length === 0 ? (
-            <div style={{ gridColumn: '1 / -1', padding: '4rem', textAlign: 'center', background: 'var(--color-bg-card)', borderRadius: 'var(--radius-lg)' }}>
-              <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🔍</div>
-              <h3 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '0.5rem' }}>No encontramos productos</h3>
-              <p style={{ color: 'var(--color-text-secondary)' }}>Intenta con otra búsqueda o categoría.</p>
-              <button className="btn btn-primary" style={{ marginTop: '1.5rem' }} onClick={() => { setActiveCategory(null); }}>
+            <div style={{ gridColumn: '1 / -1', padding: '3.5rem 1.5rem', textAlign: 'center', background: 'var(--color-bg-card)', borderRadius: 'var(--radius-md)', border: '1px solid var(--color-border)' }}>
+              <PackageSearch size={40} style={{ color: 'var(--color-text-muted)', marginBottom: '0.75rem' }} />
+              <h3 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '0.25rem' }}>No encontramos productos</h3>
+              <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.85rem', marginBottom: '1rem' }}>Intenta con otra búsqueda o categoría.</p>
+              <button className="btn btn-primary btn-sm" onClick={() => { setActiveCategory(null); }}>
                 Ver todos los productos
               </button>
             </div>
@@ -154,9 +161,9 @@ export const Home = () => {
           )}
         </div>
 
-        {/* Paginación Inferior */}
+        {/* Bottom Pagination */}
         {totalPages > 1 && !loading && products.length > 0 && (
-          <div style={{ display: 'flex', justifyContent: 'center', marginTop: '3rem' }}>
+          <div style={{ display: 'flex', justifyContent: 'center', marginTop: '2.5rem' }}>
             <div style={{ display: 'flex', gap: '0.25rem' }}>
               {Array.from({ length: totalPages }).map((_, i) => (
                 <button

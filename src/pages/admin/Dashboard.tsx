@@ -144,12 +144,12 @@ export const Dashboard = () => {
         {/* Low Stock */}
         <div className="card" style={{ padding: '1.5rem' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
-            <h2 style={{ fontWeight: 700, fontSize: '1rem' }}>⚠️ Stock crítico</h2>
+            <h2 style={{ fontWeight: 700, fontSize: '1rem' }}>Stock crítico</h2>
             <Link to="/admin/products" style={{ fontSize: '0.82rem', color: 'var(--color-accent)' }}>Ver todos</Link>
           </div>
           {(data?.lowStockProducts ?? []).length === 0 ? (
             <p style={{ fontSize: '0.875rem', color: 'var(--color-text-muted)', textAlign: 'center', padding: '2rem 0' }}>
-              ✅ Todos los productos tienen stock suficiente
+              Todos los productos tienen stock suficiente
             </p>
           ) : (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>

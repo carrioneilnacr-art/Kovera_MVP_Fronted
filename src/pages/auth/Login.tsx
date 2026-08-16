@@ -49,7 +49,7 @@ export const Login = () => {
         <div className="card" style={{ padding: '2rem' }}>
           {error && (
             <div style={{ background: '#fef2f2', border: '1px solid #fecaca', borderRadius: 'var(--radius-md)', padding: '0.75rem 1rem', color: '#991b1b', fontSize: '0.875rem', marginBottom: '1.25rem' }}>
-              ⚠️ {error}
+              {error}
             </div>
           )}
 
@@ -94,7 +94,7 @@ export const Login = () => {
             </div>
 
             <div style={{ background: 'var(--color-bg-subtle)', borderRadius: 'var(--radius-md)', padding: '0.75rem 1rem', fontSize: '0.82rem', color: 'var(--color-text-secondary)' }}>
-              <strong>🔑 Credenciales de prueba:</strong><br />
+              <strong>Credenciales de prueba:</strong><br />
               Admin: <code>admin@kovera.pe</code> / <code>admin123</code>
             </div>
 

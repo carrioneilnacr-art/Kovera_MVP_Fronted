@@ -266,7 +266,7 @@ export const Analytics = () => {
               {/* Churn Risk Table */}
               <div className="card" style={{ padding: '1.5rem' }}>
                 <h3 style={{ fontWeight: 700, fontSize: '1rem', marginBottom: '1rem', color: 'var(--color-danger)' }}>
-                  ⚠️ Clientes en Riesgo Alto de Churn (Inactivos)
+                  Clientes en Riesgo Alto de Churn (Inactivos)
                 </h3>
                 <div className="table-wrapper">
                   <table>
@@ -375,7 +375,7 @@ export const Analytics = () => {
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                     {zeroSearches.map((zs: any, i: number) => (
                       <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.5rem 0', borderBottom: '1px solid var(--color-border)' }}>
-                        <div style={{ fontWeight: 600, fontSize: '0.85rem' }}>🔍 "{zs.query_text}"</div>
+                        <div style={{ fontWeight: 600, fontSize: '0.85rem' }}>"{zs.query_text}"</div>
                         <span className="badge badge-danger" style={{ fontWeight: 700 }}>
                           {zs.search_count} búsquedas
                         </span>
@@ -438,7 +438,7 @@ export const Analytics = () => {
               {pricingCandidates.length > 0 && (
                 <div className="card" style={{ padding: '1.5rem', border: '1px solid var(--color-primary)' }}>
                   <h3 style={{ fontWeight: 700, fontSize: '1rem', marginBottom: '1rem', color: 'var(--color-primary)' }}>
-                    🔍 Candidatos por revisar ({pricingCandidates.length} pendientes)
+                    Candidatos por revisar ({pricingCandidates.length} pendientes)
                   </h3>
                   <div className="table-wrapper">
                     <table>
@@ -482,14 +482,14 @@ export const Analytics = () => {
                                   className="btn btn-primary" 
                                   style={{ padding: '0.2rem 0.5rem', fontSize: '0.75rem' }}
                                 >
-                                  ✅
+                                  Aprobar
                                 </button>
                                 <button 
                                   onClick={() => handleReviewCandidate(cand.id, false)} 
                                   className="btn" 
                                   style={{ padding: '0.2rem 0.5rem', fontSize: '0.75rem', background: '#fee2e2', color: '#ef4444' }}
                                 >
-                                  ❌
+                                  Rechazar
                                 </button>
                               </div>
                             </td>
@@ -503,7 +503,7 @@ export const Analytics = () => {
 
               <div className="card" style={{ padding: '1.5rem' }}>
                 <h3 style={{ fontWeight: 700, fontSize: '1rem', marginBottom: '1rem' }}>
-                  💡 Sugerencias de Precios Dinámicos (Algoritmo Automático por Demanda/Competencia)
+                  Sugerencias de Precios Dinámicos (Algoritmo Automático por Demanda/Competencia)
                 </h3>
                 <div className="table-wrapper">
                   <table>
@@ -540,7 +540,7 @@ export const Analytics = () => {
               {/* Competitor Scraped Feed */}
               <div className="card" style={{ padding: '1.5rem' }}>
                 <h3 style={{ fontWeight: 700, fontSize: '1rem', marginBottom: '1rem' }}>
-                  📡 Monitoreo de Competencia en Tiempo Real (Scraper Snaps)
+                  Monitoreo de Competencia en Tiempo Real (Scraper Snaps)
                 </h3>
                 <div className="table-wrapper">
                   <table>
@@ -587,7 +587,7 @@ export const Analytics = () => {
                 {/* Funnel Chart */}
                 <div className="card" style={{ padding: '1.5rem' }}>
                   <h3 style={{ fontWeight: 700, fontSize: '1rem', marginBottom: '1rem' }}>
-                    📉 Embudo de Conversión de la Tienda (Funnel Drop-off)
+                    Embudo de Conversión de la Tienda (Funnel Drop-off)
                   </h3>
                   <ResponsiveContainer width="100%" height={260}>
                     <BarChart data={funnelData} layout="vertical">
@@ -607,7 +607,7 @@ export const Analytics = () => {
                   </h3>
                   {abTests.map((ab: any, i: number) => (
                     <div key={i} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                      <div style={{ fontWeight: 700, fontSize: '0.9rem' }}>🧪 {ab.test.name}</div>
+                      <div style={{ fontWeight: 700, fontSize: '0.9rem' }}>{ab.test.name}</div>
                       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
                         {ab.variants.map((v: any, vIdx: number) => (
                           <div key={vIdx} style={{ background: 'var(--color-bg-subtle)', padding: '1rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--color-border)' }}>
@@ -683,7 +683,7 @@ export const Analytics = () => {
               {/* Demand Forecast */}
               <div className="card" style={{ padding: '1.5rem' }}>
                 <h3 style={{ fontWeight: 700, fontSize: '1rem', marginBottom: '1rem' }}>
-                  📈 Proyección de Demanda por SKU (Forecasting por Suavizado Exponencial)
+                  Proyección de Demanda por SKU (Forecasting por Suavizado Exponencial)
                 </h3>
                 <ResponsiveContainer width="100%" height={260}>
                   <AreaChart data={forecastData}>

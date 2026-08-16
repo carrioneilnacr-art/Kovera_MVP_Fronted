@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Outlet, Link, useNavigate } from 'react-router-dom';
-import { ShoppingBag, User, Menu, X, Accessibility, ZoomIn, ZoomOut, RotateCcw } from 'lucide-react';
+import { ShoppingBag, User, Menu, X, Accessibility, ZoomIn, ZoomOut, RotateCcw, Eye, Type } from 'lucide-react';
 import { useCartStore } from '../store/useCartStore';
 import { useAuthStore } from '../store/useAuthStore';
 import { useAccessibilityStore } from '../store/useAccessibilityStore';
@@ -22,24 +22,27 @@ export const MainLayout = () => {
 
   const navLinks = [
     { href: '/', label: 'Catálogo' },
-    { href: '/#celulares', label: 'Celulares' },
-    { href: '/#laptops', label: 'Laptops' },
-    { href: '/#audio', label: 'Audio' },
-    { href: '/#gaming', label: 'Gaming' },
+    { href: '/search?categoryId=1', label: 'Celulares' },
+    { href: '/search?categoryId=2', label: 'Laptops' },
+    { href: '/search?categoryId=4', label: 'Audio' },
+    { href: '/search?categoryId=8', label: 'Gaming' },
   ];
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', background: 'var(--color-bg)', color: 'var(--color-text-primary)' }}>
-      {/* Header */}
-      <header style={{ background: 'var(--color-bg-card)', borderBottom: '1px solid var(--color-border)', position: 'sticky', top: 0, zIndex: 200 }} role="banner">
-        {/* Main nav row */}
-        <div className="container" style={{ height: 72, display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+      {/* Top Notification removed per user request */}
+
+      {/* Main Header */}
+      <header style={{ background: 'var(--color-bg-card)', borderBottom: '1px solid var(--color-border)', position: 'sticky', top: 0, zIndex: 100 }}>
+        <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0.75rem 1.5rem', gap: '1.5rem' }}>
           {/* Logo */}
-          <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', textDecoration: 'none', flexShrink: 0 }} aria-label="Ir al inicio de Kovera">
-            <svg viewBox="0 0 24 24" fill="none" style={{ width: 30, height: 30, color: 'var(--color-primary)' }} aria-hidden="true">
+          <Link to="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem', flexShrink: 0 }}>
+            <svg viewBox="0 0 24 24" fill="none" style={{ width: 28, height: 28, color: 'var(--color-accent)' }}>
               <path d="M12 2L2 22h20L12 2z" fill="currentColor" />
             </svg>
-            <span style={{ fontSize: '1.4rem', fontWeight: 900, fontFamily: "'Outfit', sans-serif", letterSpacing: '0.1em', color: 'var(--color-text-primary)' }}>KOVERA</span>
+            <span style={{ fontWeight: 900, fontSize: '1.25rem', letterSpacing: '0.12em', color: 'var(--color-text-primary)', fontFamily: "'Outfit', sans-serif" }}>
+              KOVERA
+            </span>
           </Link>
 
           {/* Search */}
@@ -49,11 +52,31 @@ export const MainLayout = () => {
 
           {/* Right Actions */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginLeft: 'auto', flexShrink: 0 }}>
+            {/* Accesibilidad */}
+            <div style={{ display: 'flex', gap: '0.25rem', paddingRight: '0.5rem', borderRight: '1px solid var(--color-border)' }}>
+              <button 
+                onClick={toggleHighContrast} 
+                title="Contraste Alto"
+                aria-label="Alternar Contraste Alto"
+                style={{ border: 'none', cursor: 'pointer', padding: '0.25rem', color: highContrast ? 'var(--color-primary)' : 'var(--color-text-secondary)', background: highContrast ? 'var(--color-bg-subtle)' : 'transparent', borderRadius: '4px' }}
+              >
+                <Eye size={18} strokeWidth={2} />
+              </button>
+              <button 
+                onClick={fontSize === 'normal' ? increaseFontSize : resetAccessibility} 
+                title="Aumentar Texto"
+                aria-label="Alternar Tamaño de Texto"
+                style={{ border: 'none', cursor: 'pointer', padding: '0.25rem', color: fontSize !== 'normal' ? 'var(--color-primary)' : 'var(--color-text-secondary)', background: fontSize !== 'normal' ? 'var(--color-bg-subtle)' : 'transparent', borderRadius: '4px' }}
+              >
+                <Type size={18} strokeWidth={2} />
+              </button>
+            </div>
+
             {/* Account */}
             {isAuthenticated ? (
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px', cursor: 'pointer' }} onClick={handleLogout} role="button" tabIndex={0} aria-label={`Cerrar sesión de ${user?.firstName || user?.email}`} onKeyDown={e => e.key === 'Enter' && handleLogout()}>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px', cursor: 'pointer' }} onClick={handleLogout} role="button" tabIndex={0} aria-label={`Cerrar sesión de ${user?.name || ''}`} onKeyDown={e => e.key === 'Enter' && handleLogout()}>
                 <div style={{ width: 32, height: 32, borderRadius: '50%', background: 'var(--color-primary)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: '0.85rem' }}>
-                  {(user?.firstName || user?.email || 'A').charAt(0).toUpperCase()}
+                  {(user?.firstName || user?.name || user?.email || 'A').charAt(0).toUpperCase()}
                 </div>
                 <span style={{ fontSize: '0.65rem', color: 'var(--color-text-muted)' }}>Salir</span>
               </div>
@@ -133,15 +156,15 @@ export const MainLayout = () => {
         </div>
       </main>
 
-      {/* Footer modular */}
+      {/* Footer */}
       <Footer />
 
-      {/* ── Accessibility Panel ── */}
+      {/* Accessibility Panel */}
       <div className="a11y-panel" role="region" aria-label="Panel de accesibilidad">
         {a11yOpen && (
           <div className="a11y-menu" role="dialog" aria-label="Opciones de accesibilidad">
             <h3 style={{ fontWeight: 700, fontSize: '0.9rem', marginBottom: '1rem', color: 'var(--color-text-primary)' }}>
-              ♿ Accesibilidad
+              Accesibilidad
             </h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
               {/* High Contrast */}

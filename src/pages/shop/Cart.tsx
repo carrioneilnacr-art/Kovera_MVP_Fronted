@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useCartStore } from '../../store/useCartStore';
-import { Trash2, ShoppingBag, Plus, Minus } from 'lucide-react';
+import { Trash2, ShoppingBag, Plus, Minus, Package } from 'lucide-react';
 
 export const Cart = () => {
   const { items, removeItem, updateQuantity, clearCart, getTotals } = useCartStore();
@@ -35,7 +35,7 @@ export const Cart = () => {
               <div style={{ width: 90, height: 90, background: 'var(--color-bg-subtle)', borderRadius: 'var(--radius-md)', overflow: 'hidden', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 {item.imageUrl ? (
                   <img src={item.imageUrl} alt={item.name} style={{ width: '100%', height: '100%', objectFit: 'contain', padding: '0.5rem' }} />
-                ) : <span style={{ fontSize: '2rem' }}>📦</span>}
+                ) : <Package size={32} style={{ color: "var(--color-text-muted)" }} />}
               </div>
 
               {/* Info */}

@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { MainLayout } from './layouts/MainLayout';
 import { AdminLayout } from './layouts/AdminLayout';
 import { useAuthStore } from './store/useAuthStore';
+import ProductImporter from './pages/admin/ProductImporter';
 
 // ── Code splitting (lazy loading) ──────────────────────
 const Home = lazy(() => import('./pages/shop/Home').then(m => ({ default: m.Home })));
@@ -22,7 +23,7 @@ const Analytics = lazy(() => import('./pages/admin/Analytics').then(m => ({ defa
 // ── Loading fallback ────────────────────────────────────
 const PageLoader = () => (
   <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', padding: '2rem 0' }}>
-    {[1,2,3].map(i => (
+    {[1, 2, 3].map(i => (
       <div key={i} className="skeleton" style={{ height: '120px', borderRadius: '16px' }} />
     ))}
   </div>
@@ -61,6 +62,7 @@ function App() {
             }
           >
             <Route index element={<Dashboard />} />
+            <Route path="/admin/importador" element={<ProductImporter />} />
             <Route path="products" element={<ProductsManager />} />
             <Route path="orders" element={<OrdersManager />} />
             <Route path="invoices" element={<InvoicesManager />} />

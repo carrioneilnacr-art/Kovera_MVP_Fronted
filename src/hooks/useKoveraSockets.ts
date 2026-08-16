@@ -14,7 +14,7 @@ export const useKoveraSockets = () => {
     });
 
     newSocket.on('connect', () => {
-      console.log('🔌 Conectado a Kovera WebSockets');
+      console.log('Conectado a Kovera WebSockets');
     });
 
     newSocket.on('price_dropped', (data) => {

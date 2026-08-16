@@ -95,7 +95,7 @@ export const SuppliersManager = () => {
             </div>
             <form onSubmit={handleCreate}>
               <div className="modal-body">
-                {error && <div style={{ background: '#fef2f2', border: '1px solid #fecaca', borderRadius: 'var(--radius-md)', padding: '0.75rem', color: '#991b1b', fontSize: '0.875rem', marginBottom: '1rem' }}>⚠️ {error}</div>}
+                {error && <div style={{ background: '#fef2f2', border: '1px solid #fecaca', borderRadius: 'var(--radius-md)', padding: '0.75rem', color: '#991b1b', fontSize: '0.875rem', marginBottom: '1rem' }}>{error}</div>}
                 <div className="form-group">
                   <label className="label" htmlFor="sup-name">Nombre de la empresa *</label>
                   <input id="sup-name" className="input" required value={form.company_name} onChange={e => setForm(f => ({ ...f, company_name: e.target.value }))} placeholder="Empresa S.A.C." />

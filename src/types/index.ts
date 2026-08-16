@@ -1,11 +1,11 @@
-// Tipos que reflejan exactamente las columnas de tu MySQL Workbench
+﻿// Tipos que reflejan exactamente las columnas de tu MySQL Workbench
 
 export interface Category {
   id: number;
   name: string;
   slug: string;
-  parent_id?: number | null;
-  is_active?: boolean;
+  parentId?: number | null;
+  isActive?: boolean;
 }
 
 export interface ProductVariation {
@@ -71,3 +71,4 @@ export interface AuthState {
   token: string | null;
   isAuthenticated: boolean;
 }
+

@@ -92,7 +92,7 @@ export const Checkout = () => {
 
       {error && (
         <div style={{ background: '#fef2f2', border: '1px solid #fecaca', borderRadius: 'var(--radius-md)', padding: '1rem', color: '#991b1b', marginBottom: '1.5rem', fontSize: '0.9rem' }}>
-          ⚠️ {error}
+          {error}
         </div>
       )}
 
@@ -172,7 +172,7 @@ export const Checkout = () => {
               </div>
             </div>
             <div style={{ background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: 'var(--radius-md)', padding: '0.75rem 1rem', fontSize: '0.82rem', color: '#166534', marginTop: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              🔒 Tus datos de pago están protegidos con encriptación SSL de 256 bits.
+              Tus datos de pago están protegidos con encriptación SSL de 256 bits.
             </div>
           </div>
 

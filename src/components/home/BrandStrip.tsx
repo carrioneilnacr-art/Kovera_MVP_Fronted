@@ -1,35 +1,38 @@
 export const BrandStrip = () => {
   const brands = [
-    { name: 'Apple', logo: '🍎' },
-    { name: 'Samsung', logo: '📱' },
-    { name: 'Sony', logo: '🎮' },
-    { name: 'LG', logo: '📺' },
-    { name: 'Lenovo', logo: '💻' },
-    { name: 'HP', logo: '🖨️' },
+    'Apple', 'Samsung', 'Sony', 'LG', 'Lenovo', 'HP', 'Dell', 'Xiaomi'
   ];
 
   return (
     <div style={{
-      padding: '2rem 0',
+      padding: '1.5rem 0',
       borderTop: '1px solid var(--color-border)',
       borderBottom: '1px solid var(--color-border)',
-      marginBottom: '4rem',
+      marginBottom: '2.5rem',
       overflow: 'hidden',
-      background: 'var(--color-bg-subtle)'
+      background: 'var(--color-bg-card)'
     }}>
       <div style={{
         display: 'flex',
         justifyContent: 'space-around',
         alignItems: 'center',
         flexWrap: 'wrap',
-        gap: '2rem',
-        opacity: 0.7
+        gap: '1.5rem',
       }}>
-        {brands.map(brand => (
-          <div key={brand.name} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '1.25rem', fontWeight: 700, color: 'var(--color-text-secondary)' }}>
-            <span style={{ fontSize: '1.5rem' }}>{brand.logo}</span>
-            {brand.name}
-          </div>
+        {brands.map(name => (
+          <span 
+            key={name} 
+            style={{ 
+              fontSize: '1rem', 
+              fontWeight: 800, 
+              letterSpacing: '0.08em', 
+              color: 'var(--color-text-muted)',
+              textTransform: 'uppercase',
+              fontFamily: "'Outfit', sans-serif"
+            }}
+          >
+            {name}
+          </span>
         ))}
       </div>
     </div>

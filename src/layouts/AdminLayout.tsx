@@ -3,7 +3,7 @@ import { Outlet, NavLink, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store/useAuthStore';
 import {
   LayoutDashboard, Package, FileText, ShoppingCart,
-  LogOut, ChevronLeft, ChevronRight, BarChart3, Truck, TrendingUp,
+  LogOut, ChevronLeft, ChevronRight, BarChart3, Truck, TrendingUp, Globe,
 } from 'lucide-react';
 
 export const AdminLayout = () => {
@@ -24,6 +24,7 @@ export const AdminLayout = () => {
     { to: '/admin/invoices', label: 'Facturas', icon: <FileText size={18} /> },
     { to: '/admin/suppliers', label: 'Proveedores', icon: <Truck size={18} /> },
     { to: '/admin/reports', label: 'Reportes', icon: <BarChart3 size={18} /> },
+    { to: '/admin/importador', label: 'Importador', icon: <Globe size={18} /> },
   ];
 
   return (
@@ -108,7 +109,7 @@ export const AdminLayout = () => {
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
             <a href="/" target="_blank" rel="noopener noreferrer" className="btn btn-outline btn-sm" style={{ fontSize: '0.8rem' }}>
-              Ver tienda ↗
+              Ver tienda →
             </a>
           </div>
         </header>
